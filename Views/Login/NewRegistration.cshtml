@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "NewRegistration";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<div class="container" ng-controller="LoginController">
+    <form name="regForm" novalidate>
+        <!-- navbar top -->
+        <div class="row">
+            <!-- page header -->
+            <div class="col-lg-12">
+                <h1 class="page-header">New Registration</h1>
+            </div>
+            <!--end page header -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Form Elements -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        New Registration!!
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Full Name *</label>
+                                    <input type="text" name="txtName" class="form-control" ng-model="Student.Name"
+                                        placeholder="Full Name" required />
+                                    <span style="color: red" ng-show="regForm.txtName.$dirty && regForm.txtName.$invalid || submitted">
+                                        <span ng-show="regForm.txtName.$error.required">Name is required.</span>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gender *</label>
+                                    <select ng-model="Student.Gender" class="form-control">
+                                        <option value="" label="Select Gender"></option>
+                                        <option value="1" label="Male"></option>
+                                        <option value="2" label="Female"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>DOB: *</label>
+                                    <input type="date" name="txtdob" class="form-control form-control-small" ng-change="CalculateAge(Student)" ng-model="Student.DOB"
+                                        placeholder="dd-MM-yyyy" required />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.txtdob.$dirty || submitted)
+                                                && regForm.txtdob.$error.required">DOB is required</span>
+                                    {{ Student.DOB }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Nationality:</label>
+                                    <select class="form-control" ng-model="Student.Nationality"
+                                        ng-options="option.Key as option.Value for option in nationalList">
+                                        <option value="">Select Nationality</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>State: *</label>
+                                    <select name="state" class="form-control" ng-model="Student.State"
+                                        ng-options="option.Key as option.Value for option in nationalList">
+                                        <option value="">Select State</option>
+                                    </select>
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.state.$dirty || submitted)
+                                          && regForm.state.$error.required">State Name is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control" ng-model="Student.Category" ng-click="updateSelection"
+                                        ng-options="option.Key as option.Value for option in categoryList">
+                                        <option value="">Select Category</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobile No. *</label>
+                                    <input type="number" ng-minlength="10" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))" ng-maxlength="10" name="mobileNo" ng-model="Student.MobileNo" placeholder="Mobile No." class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.mobileNo.$dirty || submitted)
+                                          && regForm.mobileNo.$error.required">Mobile No. is required</span>
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.mobileNo.$dirty || submitted)
+                                          && (regForm.mobileNo.$error.minlength || regForm.mobileNo.$error.maxlength)">Mobile No. should be 10 digits</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Previous College/School:</label>
+                                    <input type="text" name="studentName" ng-model="Student.School" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                </div>
+                                <div class="form-group">
+                                    <label>Class 10 % *</label>
+                                    <input type="number" name="number10" ng-model="Student.Class10Marks" ng-pattern="/^-?[0-9][^\.]*$/" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.number10.$dirty || submitted)
+                                          && regForm.number10.$error.required">Class 10% is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Course: *</label>
+                                    <select name="course" class="form-control" ng-model="Student.Course" required
+                                        ng-options="option.Key as option.Value for option in nationalList">
+                                        <option value="">Select Course</option>
+                                    </select>
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.course.$dirty)
+                                          && regForm.course.$error.required">Course Name is required</span>
+                                </div>
+                                <input type="submit" class="btn-btn-lg btn-success" ng-click="submit(Student)" value="SAVE" />
+                                @*<input type="submit" class="btn-btn-lg btn-success" ng-click="LoginCheck(AdminLogin)" value="SAVE" />*@
+                                <input type="submit" class="btn-btn-lg btn-success " ng-click="UploadDocument()" value="NEXT >>" />
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Father's Name *</label>
+                                    <input type="text" name="fatherName" ng-model="Student.FatherName" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.fatherName.$dirty || submitted)
+                                                && regForm.fatherName.$error.required">Father Name is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mother's Name *</label>
+                                    <input type="text" name="motherName" ng-model="Student.MotherName" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.motherName.$dirty || submitted)
+                                                && regForm.motherName.$error.required">Mother Name is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Age:</label>
+                                    <input type="text" disabled="disabled" name="studentAge" ng-model="Student.Age" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    {{ Age }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Religioun</label>
+                                    <select name="religioun" class="form-control" required ng-model="Student.Religioun">
+                                        <option value="">--Select User--</option>
+                                        <option ng-repeat="option in nationalList" value="{{option.Key}}">{{option.Value}}</option>
+                                    </select>
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.religioun.$dirty || submitted)
+                                          && regForm.religioun.$error.required">Religioun is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select name="city" class="form-control" ng-model="Student.City"
+                                        ng-options="option.Key as option.Value for option in nationalList">
+                                        <option value="">Select State</option>
+                                    </select>
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.city.$dirty || submitted)
+                                          && regForm.city.$error.required">City Name is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>PinCode *</label>
+                                    <input type="text" name="pinCode" ng-model="Student.PinCode" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.pinCode.$dirty || submitted)
+                                          && regForm.pinCode.$error.required">PIN Code is required</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Alternate No.</label>
+                                    <input type="number" ng-minlength="10" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))" ng-maxlength="10" name="AlternateNo" ng-model="Student.AlternateNo" placeholder="Alternate No." class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span class="text-danger" style="color: red" ng-show="(regForm.AlternateNo.$dirty || submitted)
+                                          && (regForm.AlternateNo.$error.minlength || regForm.AlternateNo.$error.maxlength)">Mobile No. should be 10 digits</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" name="Email" ng-model="Student.Email" placehsolder="Email Address" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                    <span style="color: red" ng-show="regForm.Email.$dirty && regForm.Email.$invalid || submitted">
+                                        <span ng-show="regForm.Email.$error.required">Email is required.</span>
+                                        <span ng-show="regForm.Email.$error.email">Invalid email address.</span>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Class 12 %</label>
+                                    <input type="number" name="studentName" ng-model="Student.Class12Marks" placeholder="Class 12 %" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

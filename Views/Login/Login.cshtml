@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+@section Logincontroller{
+    <script src="~/Angular/LoginController.js"></script>
+}
+<style>
+    textbox {
+        padding: 5px;
+        border: 1px solid groove;
+    }
+
+    input.ng-dirty.ng-invalid {
+        border: 1px solid red;
+        background-color: rgb(255, 244, 244);
+    }
+
+    .error {
+        color: red;
+    }
+</style>
+<div class="container" ng-controller="LoginController">
+    <form name="loginForm" novalidate>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
+                <img src="assets/img/logo.png" alt="" />
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Login In</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <input type="text" name="uname" ng-model="AdminLogin.AdminName" placeholder="User Name" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                            <span class="text-danger" ng-show="(loginForm.uname.$dirty || submitted)
+                                          && loginForm.uname.$error.required">Country Name is required</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="upassword" ng-model="AdminLogin.AdminPassword" placeholder="********" class="form-control" ng-class="submitted?'ng-dirty':''" required autofocus />
+                            <span class="text-danger" ng-show="(loginForm.upassword.$dirty || submitted)
+                                          && loginForm.upassword.$error.required">Password is required</span>
+                        </div>
+                        <input type="submit" ng-disabled="loginForm .$invalid" class="btn-btn-lg btn-success btn-block" ng-click="LoginCheck(AdminLogin)" value="Login" />
+                        <br />
+                        <a ng-click="NewRegistrationCall()" title="New Registration" type="text/html">New Registration.....!</a>
+                        @*<input type="text"  ng-click="NewRegistrationCall()" value="New Registration....!" title="New Registration...!" />*@
+                        <div style="color: red">{{ message }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
